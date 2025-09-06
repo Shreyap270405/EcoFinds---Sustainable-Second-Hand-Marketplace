@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EcoFinds - Sustainable Marketplace</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Montserrat", "Segoe UI", sans-serif;
+      margin: 0; padding: 0;
+      background: linear-gradient(135deg, #e8f5e9 0%, #f0f4f3 100%);
+      color: #333;
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(90deg, #43a047 0%, #388e3c 100%);
+      color: white;
+      padding: 18px 0 12px 0;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    nav a {
+      margin: 0 14px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 0.2s;
+      font-size: 1.08em;
+      letter-spacing: 0.5px;
+      position: relative;
+    }
+    nav a:hover, nav a.active {
+      color: #ffe082;
+      text-shadow: 0 2px 8px #2e7d32a0;
+    }
+    nav a[style*="float:right"] {
+      float: right;
+      margin-right: 30px;
+      font-weight: 700;
+      background: #fff3;
+      padding: 6px 18px;
+      border-radius: 20px;
+      transition: background 0.2s;
+    }
+    nav a[style*="float:right"]:hover {
+      background: #ffe082;
+      color: #2e7d32;
+    }
+    section {
+      display: none;
+      padding: 36px 0 0 0;
+      max-width: 900px;
+      margin: 0 auto;
+      animation: fadeIn 0.5s cubic-bezier(.4,0,.2,1);
+    }
+    section.active { display: block; }
+    h1, h2 {
+      color: #2e7d32;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 2em;
+    }
+    form input, form select, form textarea, form button {
+      display: block;
+      margin: 14px 0;
+      padding: 12px;
+      width: 320px;
+      border: 1.5px solid #b2dfdb;
+      border-radius: 7px;
+      font-size: 1em;
+      transition: border 0.2s, box-shadow 0.2s;
+      background: #f9fbe7;
+      outline: none;
+    }
+    form input:focus, form select:focus, form textarea:focus {
+      border: 2px solid #43a047;
+      box-shadow: 0 2px 10px #a5d6a7a0;
+      background: #fff;
+    }
+    form button {
+      background: linear-gradient(90deg, #43a047 0%, #388e3c 100%);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.08em;
+      width: 180px;
+      margin-top: 18px;
+      box-shadow: 0 2px 8px #388e3c33;
+      transition: background 0.2s, transform 0.1s;
+    }
+    form button:hover { background: #256628; transform: scale(1.04);}
+    .btn {
+      padding: 12px 22px;
+      background: linear-gradient(90deg, #43a047 0%, #388e3c 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 7px;
+      margin: 8px 8px 8px 0;
+      display: inline-block;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.08em;
+      border: none;
+      box-shadow: 0 2px 8px #388e3c33;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn:hover { background: #256628; transform: scale(1.05);}
+    .flex { display: flex; flex-wrap: wrap; gap: 28px; }
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 340px;
+      align-items: stretch;
+      border: 1.5px solid #b2dfdb;
+      border-radius: 12px;
+      background: linear-gradient(120deg, #fff 80%, #e0f2f1 100%);
+      padding: 18px 16px 16px 16px;
+      width: 240px;
+      box-shadow: 0 2px 12px #b2dfdb33;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      cursor: pointer;
+    }
+    .product-card:hover {
+      transform: scale(1.04) translateY(-4px);
+      box-shadow: 0 8px 24px #388e3c22;
+      border-color: #43a047;
+    }
+    .product-card img {
+      width: 100%; border-radius: 8px; margin-bottom: 10px;
+      box-shadow: 0 2px 8px #b2dfdb33;
+    }
+    .product-card .desc {
+      color: #555;
+      font-size: 1em;
+      margin: 8px 0 12px 0;
+      flex: 1 1 auto;
+    }
+    .filter-bar {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 18px;
+      align-items: center;
+      background: #e0f2f1;
+      padding: 12px 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #b2dfdb33;
+      position: sticky;
+      top: 70px;
+      z-index: 5;
+    }
+    .filter-bar input, .filter-bar select {
+      flex: 1 1 0;
+      min-width: 0;
+      font-size: 1em;
+      padding: 10px 12px;
+      border-radius: 7px;
+      border: 1.5px solid #b2dfdb;
+      background: #fff;
+    }
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: auto;
+      gap: 10px;
+    }
+    .price {
+      font-size: 1.2em;
+      color: #2e7d32;
+      font-weight: bold;
+    }
+    .action-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .buy-btn {
+      background: linear-gradient(90deg, #43a047 0%, #388e3c 100%);
+      color: #fff;
+      border-radius: 8px;
+      flex: 1 1 0;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .buy-btn:hover, .buy-btn:active {
+      background: #256628;
+      transform: scale(1.03);
+    }
+    .sell-btn {
+      background: linear-gradient(90deg, #ffb300 0%, #ff8f00 100%);
+      color: #fff;
+      border-radius: 8px;
+      flex: 1 1 0;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .sell-btn:hover, .sell-btn:active {
+      background: #ff6f00;
+      transform: scale(1.03);
+    }
+    @keyframes fadeIn {
+      from {opacity:0; transform: translateY(16px);}
+      to {opacity:1; transform: translateY(0);}
+    }
+    /* Modal styles */
+    .modal-bg {
+      display: none;
+      position: fixed; top:0; left:0; width:100vw; height:100vh;
+      background: rgba(44,62,80,0.18);
+      z-index: 1000;
+      align-items: center; justify-content: center;
+    }
+    .modal-bg.active { display: flex; }
+    .modal {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 8px 32px #388e3c44;
+      padding: 32px 36px;
+      min-width: 320px;
+      max-width: 90vw;
+      animation: fadeIn 0.3s;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 12px; right: 18px;
+      font-size: 1.5em; color: #43a047; cursor: pointer;
+      font-weight: bold;
+      background: none; border: none;
+    }
+    /* Toast styles */
+    .toast {
+      position: fixed;
+      bottom: 32px; right: 32px;
+      background: #43a047;
+      color: #fff;
+      padding: 16px 32px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1.1em;
+      box-shadow: 0 2px 12px #388e3c55;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+      z-index: 2000;
+    }
+    .toast.show { opacity: 1; pointer-events: auto;}
+    /* Loader */
+    .loader {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(255,255,255,0.7);
+      z-index: 2000;
+      align-items: center; justify-content: center;
+    }
+    .loader.active { display: flex; }
+    .spinner {
+      border: 6px solid #b2dfdb;
+      border-top: 6px solid #43a047;
+      border-radius: 50%;
+      width: 48px; height: 48px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0);}
+      100% { transform: rotate(360deg);}
+    }
+    /* Welcome message */
+    #welcomeMsg {
+      font-size: 1.2em;
+      color: #388e3c;
+      margin-bottom: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      display: none;
+    }
+    /* Responsive */
+    @media (max-width: 700px) {
+      .flex { flex-direction: column; gap: 18px;}
+      .product-card { width: 98vw; }
+      section { padding: 18px 4vw 0 4vw;}
+      .modal { padding: 18px 8vw;}
+      nav {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 10px;
+      }
+      nav a, nav a[style*="float:right"] {
+        display: block;
+        float: none !important;
+        margin: 10px 0;
+        padding: 12px 0;
+        font-size: 1.15em;
+        border-radius: 10px;
+        text-align: center;
+      }
+      form input, form select, form textarea, form button {
+        width: 96vw;
+        max-width: 98vw;
+        font-size: 1.1em;
+        padding: 16px;
+      }
+      .btn, form button {
+        font-size: 1.1em;
+        padding: 16px 0;
+        width: 96vw;
+        max-width: 98vw;
+        margin: 10px 0;
+      }
+      h1, h2 {
+        font-size: 1.5em;
+      }
+      .toast {
+        left: 4vw;
+        right: 4vw;
+        bottom: 16px;
+        width: auto;
+        font-size: 1em;
+        padding: 12px 10px;
+        text-align: center;
+      }
+      .modal {
+        min-width: unset;
+        width: 96vw;
+        max-width: 98vw;
+        padding: 12px 2vw;
+      }
+      #welcomeMsg {
+        font-size: 1.1em;
+        padding: 0 2vw;
+      }
+    }
+    .filter-bar {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 18px;
+      align-items: center;
+      background: #e0f2f1;
+      padding: 12px 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #b2dfdb33;
+      position: sticky;
+      top: 70px;
+      z-index: 5;
+    }
+    .filter-bar input, .filter-bar select {
+      flex: 1 1 0;
+      min-width: 0;
+      font-size: 1em;
+      padding: 10px 12px;
+      border-radius: 7px;
+      border: 1.5px solid #b2dfdb;
+      background: #fff;
+    }
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: auto;
+      gap: 10px;
+    }
+    .price {
+      font-size: 1.2em;
+      color: #2e7d32;
+      font-weight: bold;
+    }
+    .action-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .buy-btn {
+      background: linear-gradient(90deg, #43a047 0%, #388e3c 100%);
+      color: #fff;
+      border-radius: 8px;
+      flex: 1 1 0;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .buy-btn:hover, .buy-btn:active {
+      background: #256628;
+      transform: scale(1.03);
+    }
+    .sell-btn {
+      background: linear-gradient(90deg, #ffb300 0%, #ff8f00 100%);
+      color: #fff;
+      border-radius: 8px;
+      flex: 1 1 0;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .sell-btn:hover, .sell-btn:active {
+      background: #ff6f00;
+      transform: scale(1.03);
+    }
+    .add-cart-btn {
+      margin-top: 16px;
+      background: linear-gradient(90deg, #00c853 0%, #43a047 100%);
+      color: #fff;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.08em;
+      box-shadow: 0 4px 16px #00c85322;
+      width: 100%;
+      padding: 14px 0;
+      letter-spacing: 0.5px;
+      border: none;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .add-cart-btn:hover, .add-cart-btn:active {
+      background: linear-gradient(90deg, #43a047 0%, #00c853 100%);
+      transform: scale(1.04);
+      box-shadow: 0 8px 24px #00c85333;
+    }
+    .cart-items-modern {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .cart-product-card {
+      display: flex;
+      align-items: center;
+      background: linear-gradient(90deg, #e0f7fa 60%, #e8f5e9 100%);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px #b2dfdb33;
+      padding: 16px 18px;
+      gap: 18px;
+      position: relative;
+      border: 1.5px solid #b2dfdb;
+      transition: box-shadow 0.2s, border 0.2s;
+    }
+    .cart-product-card:hover {
+      box-shadow: 0 8px 24px #388e3c22;
+      border-color: #43a047;
+    }
+    .cart-product-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #fff;
+      box-shadow: 0 2px 8px #b2dfdb33;
+    }
+    .cart-product-info {
+      flex: 1 1 0;
+    }
+    .cart-product-title {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #2e7d32;
+      margin-bottom: 4px;
+    }
+    .cart-product-price {
+      color: #388e3c;
+      font-size: 1em;
+      font-weight: 500;
+    }
+    .cart-remove-btn {
+      background: linear-gradient(90deg, #ff5252 0%, #ff1744 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-weight: 600;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      margin-left: 18px;
+    }
+    .cart-remove-btn:hover {
+      background: #d50000;
+      transform: scale(1.07);
+    }
+    .checkout-btn {
+      width: 100%;
+      padding: 18px 0;
+      font-size: 1.15em;
+      background: linear-gradient(90deg, #43a047 0%, #00c853 100%);
+      color: #fff;
+      border-radius: 10px;
+      font-weight: 700;
+      box-shadow: 0 4px 16px #00c85322;
+      border: none;
+      margin-top: 12px;
+      letter-spacing: 1px;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+    }
+    .checkout-btn:hover {
+      background: linear-gradient(90deg, #00c853 0%, #43a047 100%);
+      transform: scale(1.03);
+      box-shadow: 0 8px 24px #00c85333;
+    }
+    #cartSummary {
+      font-size: 1.15em;
+      color: #2e7d32;
+      font-weight: 600;
+      text-align: right;
+    }
+    @media (max-width: 700px) {
+      .cart-product-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 14px 8px;
+      }
+      .cart-product-img {
+        width: 48px;
+        height: 48px;
+      }
+      #cartSummary {
+        text-align: left;
+        font-size: 1.05em;
+        margin-top: 8px;
+      }
+    }
+    .add-product-form {
+      background: linear-gradient(120deg, #e0f7fa 60%, #e8f5e9 100%);
+      border-radius: 14px;
+      box-shadow: 0 4px 24px #b2dfdb33;
+      padding: 28px 24px 18px 24px;
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .add-product-row {
+      display: flex;
+      gap: 14px;
+    }
+    .add-product-form input, .add-product-form select, .add-product-form textarea {
+      margin: 0;
+      width: 100%;
+      font-size: 1.08em;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1.5px solid #b2dfdb;
+      background: #fff;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    .add-product-form input:focus, .add-product-form select:focus, .add-product-form textarea:focus {
+      border: 2px solid #43a047;
+      box-shadow: 0 2px 10px #a5d6a7a0;
+      background: #f9fbe7;
+    }
+    .img-upload-btn {
+      background: linear-gradient(90deg, #ffd600 0%, #ffb300 100%);
+      color: #2e7d32;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1.08em;
+      padding: 12px 18px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #ffd60033;
+      transition: background 0.2s, color 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .img-upload-btn:hover {
+      background: #ffb300;
+      color: #fff;
+      transform: scale(1.04);
+    }
+    .submit-product-btn {
+      background: linear-gradient(90deg, #43a047 0%, #00c853 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1.15em;
+      padding: 16px 0;
+      margin-top: 10px;
+      box-shadow: 0 4px 16px #00c85322;
+      letter-spacing: 1px;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      width: 100%;
+    }
+    .submit-product-btn:hover {
+      background: linear-gradient(90deg, #00c853 0%, #43a047 100%);
+      transform: scale(1.03);
+      box-shadow: 0 8px 24px #00c85333;
+    }
+    @media (max-width: 700px) {
+      .add-product-form {
+        padding: 14px 2vw 10px 2vw;
+        max-width: 98vw;
+      }
+      .add-product-row {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="loader" id="loader"><div class="spinner"></div></div>
+<div class="toast" id="toast"></div>
+<div id="welcomeMsg"></div>
+
+<header>
+  <div style="display:flex;align-items:center;justify-content:center;gap:18px;">
+    <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/svg/1f331.svg" alt="EcoFinds Logo" style="height:48px;width:48px;vertical-align:middle;">
+    <h1 style="margin:0;">EcoFinds</h1>
+  </div>
+  <nav id="main-nav" style="display:none;">
+    <span id="buyer-nav" style="display:none;">
+      <a onclick="showPage('home', this)">Home</a>
+      <a onclick="showPage('cart', this)">My Cart</a>
+      <a onclick="showPage('purchases', this)">Purchases</a>
+      <a onclick="showPage('profile', this)">Profile</a>
+    </span>
+    <span id="seller-nav" style="display:none;">
+      <a onclick="showPage('addProduct', this)">Add Product</a>
+      <a onclick="showPage('myListings', this)">My Listings</a>
+      <a onclick="showPage('sales', this)">Sales Info</a>
+      <a onclick="showPage('profile', this)">Profile</a>
+    </span>
+    <a style="float:right;" onclick="logout()">Logout</a>
+    <a style="float:right; margin-right:10px; background:#fff6; color:#2e7d32;" onclick="switchUserMode()">Switch to <span id="switchModeLabel">Seller</span></a>
+  </nav>
+</header>
+
+<!-- Step 1: Choose Login or Sign Up -->
+<section id="auth" class="active">
+  <h2>Welcome to EcoFinds</h2>
+  <p>Discover, buy, and sell sustainable products with ease.</p>
+  <button class="btn" onclick="showPage('login')">Login</button>
+  <button class="btn" onclick="showPage('signup')">Sign Up</button>
+</section>
+
+<!-- Step 2: Login Form -->
+<section id="login">
+  <h2>Login</h2>
+  <form onsubmit="event.preventDefault(); chooseRole();">
+    <input type="email" id="loginEmail" placeholder="Email" required>
+    <input type="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+  </form>
+  <p>
+    <a href="#" onclick="showPage('forgotPassword')">Forgot Password?</a>
+  </p>
+  <p>Don’t have an account? <a href="#" onclick="showPage('signup')">Sign Up</a></p>
+</section>
+
+<!-- Forgot Password Section -->
+<section id="forgotPassword">
+  <h2>Forgot Password</h2>
+  <form onsubmit="event.preventDefault(); resetPassword();">
+    <input type="text" id="fpUsername" placeholder="Enter your Username" required>
+    <input type="password" id="fpNewPassword" placeholder="Enter New Password" required>
+    <button type="submit">Update Password</button>
+  </form>
+  <p><a href="#" onclick="showPage('login')">Back to Login</a></p>
+</section>
+
+<!-- Step 3: Choose Role -->
+<section id="role">
+  <h2>What would you like to do?</h2>
+  <button class="btn" onclick="enterBuyer()">🛒 I want to Buy</button>
+  <button class="btn" onclick="enterSeller()">📦 I want to Sell</button>
+</section>
+
+<!-- Buyer: Home -->
+<section id="home">
+  <h2>Browse Products</h2>
+  <div class="filter-bar">
+    <input type="text" id="searchInput" placeholder="Search products..." oninput="filterProducts()">
+    <select id="categorySelect" onchange="filterProducts()">
+      <option value="">All Categories</option>
+      <option>Electronics</option>
+      <option>Clothing</option>
+      <option>Furniture</option>
+    </select>
+  </div>
+  <div class="flex" id="productList">
+    <!-- Products added dynamically -->
+  </div>
+  <div id="noProductsMsg" style="display:none;text-align:center;color:#888;font-size:1.1em;margin-top:24px;">
+    No products found.
+  </div>
+</section>
+
+<!-- Buyer: Cart -->
+<section id="cart">
+  <h2>My Cart</h2>
+  <div id="cartItems" class="cart-items-modern"></div>
+  <div id="cartSummary" style="margin-top:24px;"></div>
+  <button class="btn checkout-btn" onclick="showPaymentSection()">Checkout</button>
+
+  <!-- Payment Options (hidden by default, shown after checkout) -->
+  <div class="payment-section" id="paymentSection" style="display:none;">
+    <h3>Choose Payment Method</h3>
+    <label><input type="radio" name="payment" value="card" checked> Credit/Debit Card</label>
+    <label><input type="radio" name="payment" value="upi"> UPI</label>
+    <label><input type="radio" name="payment" value="cod"> Cash on Delivery</label>
+    <h3 style="margin-top:18px;">Delivery Address</h3>
+    <textarea id="deliveryAddress" rows="2" placeholder="Enter your delivery address" style="width:100%;margin-bottom:12px;" required></textarea>
+    <div id="finalBill" style="margin:14px 0; font-weight:600; color:#2e7d32;"></div>
+    <button class="confirm-payment" onclick="confirmPayment()">Confirm Payment</button>
+  </div>
+
+  <style>
+    .payment-section {
+      margin-top:20px;
+      padding:16px;
+      border-radius:10px;
+      background:#f1f8e9;
+      border:1.5px solid #c5e1a5;
+    }
+    .payment-section h3 { color:#558b2f; margin-bottom:10px;}
+    .payment-section label { display:block; margin:6px 0; font-weight:600; color:#33691e; }
+    .payment-section input[type="radio"] { margin-right:8px; }
+    .confirm-payment {
+      margin-top:12px;
+      background: #43a047;
+      color:#fff;
+      padding:12px 24px;
+      border:none;
+      border-radius:8px;
+      font-weight:700;
+      cursor:pointer;
+      transition:0.2s;
+    }
+    .confirm-payment:hover { background:#2e7d32; transform:scale(1.03); }
+  </style>
+</section>
+
+<!-- Buyer: Purchases -->
+<section id="purchases">
+  <h2>Previous Purchases</h2>
+  <ul id="purchaseList">
+    <!-- Removed "Reused Jacket - $40" -->
+  </ul>
+</section>
+
+<!-- Seller: Add Product -->
+<section id="addProduct">
+  <h2>Add New Product</h2>
+  <form class="add-product-form" onsubmit="event.preventDefault(); addProductToListings(this); this.reset();">
+    <div class="add-product-row">
+      <input type="text" placeholder="Product Title" name="title" required>
+      <select name="category">
+        <option>Electronics</option>
+        <option>Clothing</option>
+        <option>Furniture</option>
+      </select>
+    </div>
+    <textarea placeholder="Description" name="desc" rows="3" required></textarea>
+    <input type="text" placeholder="Used For (e.g., 2 years)" name="usedFor" required>
+    <textarea placeholder="Reason for Reselling" name="reason" rows="2" required></textarea>
+    <input type="text" placeholder="Product Condition (e.g., Like New, Good, Fair)" name="condition" required>
+    <input type="text" placeholder="Brand (e.g., HP, Sony, IKEA)" name="brand" required>
+    <div class="add-product-row">
+      <input type="number" placeholder="Price" name="price" min="1" required>
+      <button type="button" class="btn" onclick="alert('Image upload coming soon!')">📷 Add Image</button>
+    </div>
+    <button type="submit" class="submit-product-btn">Submit Listing</button>
+  </form>
+</section>
+
+<!-- Seller: My Listings -->
+<section id="myListings">
+  <h2>My Listings</h2>
+  <div id="sellerListings" class="flex"></div>
+</section>
+
+<!-- Profile (Buyer or Seller) -->
+<section id="profile">
+  <h2>My Profile</h2>
+  <p><strong>Username:</strong> <span id="profileName">Guest</span></p>
+  <form id="profileForm" onsubmit="event.preventDefault(); updateProfile();">
+    <input type="text" id="updateUsername" placeholder="Update Username">
+    <input type="email" id="updateEmail" placeholder="Update Email">
+    <input type="password" id="updatePassword" placeholder="Change Password">
+    <button type="submit">Save Changes</button>
+  </form>
+  <h3>Past History</h3>
+  <ul id="profileHistory">
+    <!-- Will be updated dynamically -->
+  </ul>
+  <h3>Coupons</h3>
+  <ul>
+    <li>10% OFF - Code: ECO10</li>
+    <li>Free Shipping - Code: GREENSHIP</li>
+  </ul>
+</section>
+
+<!-- Product Modal -->
+<div class="modal-bg" id="productModalBg" onclick="closeProductModal(event)">
+  <div class="modal" id="productModal" onclick="event.stopPropagation();">
+    <button class="modal-close" onclick="closeProductModal(event)">&times;</button>
+    <img id="modalImg" src="" alt="Product" style="width:100%;border-radius:8px;box-shadow:0 2px 8px #b2dfdb33;">
+    <h2 id="modalTitle"></h2>
+    <p><strong>Price:</strong> $<span id="modalPrice"></span></p>
+    <p><strong>Category:</strong> <span id="modalCategory"></span></p>
+    <p id="modalDesc"></p>
+    <div style="display:flex;gap:12px;">
+      <button class="btn buy-btn" onclick="addToCartFromModal()">Buy</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Loader
+  function showLoader() {
+    document.getElementById('loader').classList.add('active');
+    setTimeout(() => document.getElementById('loader').classList.remove('active'), 600);
+  }
+  // Toast
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.innerText = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+  // Navigation
+  function showPage(id, navLink) {
+    showLoader();
+    document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    // Highlight nav
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    if (navLink) navLink.classList.add('active');
+    // Hide welcome on non-home
+    document.getElementById('welcomeMsg').style.display = (id === 'home') ? 'block' : 'none';
+  }
+  // Auth and Role
+  function chooseRole() {
+    // Save username/email for profile
+    const username = document.getElementById("signupUsername")?.value || document.getElementById("loginEmail")?.value?.split('@')[0] || "User";
+    document.getElementById("profileName").innerText = username;
+    document.getElementById('welcomeMsg').innerText = `Welcome, ${username}!`;
+    document.getElementById('welcomeMsg').style.display = 'block';
+    showToast('Login successful!');
+    showPage('role');
+  }
+  let currentMode = 'buyer';
+  function enterBuyer() {
+    currentMode = 'buyer';
+    document.getElementById("buyer-nav").style.display = "inline";
+    document.getElementById("seller-nav").style.display = "none";
+    document.getElementById("main-nav").style.display = "block";
+    document.getElementById("switchModeLabel").innerText = "Seller";
+    showPage('home');
+    showToast('Buyer mode activated!');
+  }
+  function enterSeller() {
+    currentMode = 'seller';
+    document.getElementById("buyer-nav").style.display = "none";
+    document.getElementById("seller-nav").style.display = "inline";
+    document.getElementById("main-nav").style.display = "block";
+    document.getElementById("switchModeLabel").innerText = "Buyer";
+    showPage('addProduct');
+    showToast('Seller mode activated!');
+  }
+  function logout() {
+    document.getElementById("main-nav").style.display = "none";
+    document.getElementById("buyer-nav").style.display = "none";
+    document.getElementById("seller-nav").style.display = "none";
+    document.getElementById('welcomeMsg').style.display = 'none';
+    showPage('auth');
+    showToast('Logged out!');
+  }
+  // Modal
+  let modalProduct = {};
+  function openProductModal(title, price, category, desc, img) {
+    modalProduct = {title, price, category, desc};
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalPrice').innerText = price;
+    document.getElementById('modalCategory').innerText = category;
+    document.getElementById('modalDesc').innerText = desc;
+    document.getElementById('modalImg').src = img;
+    document.getElementById('productModalBg').classList.add('active');
+  }
+  function closeProductModal(e) {
+    document.getElementById('productModalBg').classList.remove('active');
+  }
+  function addToCartFromModal() {
+    addToCart(modalProduct.title, modalProduct.price);
+    closeProductModal();
+  }
+  // Cart logic (demo, not persistent)
+  let cart = [];
+  function addToCart(title, price) {
+    // Add a placeholder image based on product title
+    let img = title.includes('Laptop')
+      ? 'https://via.placeholder.com/200'
+      : 'https://via.placeholder.com/200';
+    cart.push({title, price, img});
+    updateCartUI();
+    showToast(`Added "${title}" to cart!`);
+  }
+  function updateCartUI() {
+    const cartDiv = document.getElementById('cartItems');
+    const cartSummary = document.getElementById('cartSummary');
+    if (!cart.length) {
+      cartDiv.innerHTML = "<p style='text-align:center;color:#888;font-size:1.1em;'>Your cart is empty.</p>";
+      cartSummary.innerHTML = "";
+      return;
+    }
+    let total = 0;
+    cartDiv.innerHTML = cart.map((item, i) => {
+      total += Number(item.price);
+      return `
+        <div class="cart-product-card">
+          <img class="cart-product-img" src="${item.img}" alt="${item.title}">
+          <div class="cart-product-info">
+            <div class="cart-product-title">${item.title}</div>
+            <div class="cart-product-price">$${item.price}</div>
+          </div>
+          <button class="cart-remove-btn" onclick="removeCartItem(${i})">Remove</button>
+        </div>
+      `;
+    }).join('');
+    cartSummary.innerHTML = `Total: $${total}`;
+  }
+  function removeCartItem(idx) {
+    cart.splice(idx, 1);
+    updateCartUI();
+    showToast('Item removed from cart.');
+  }
+  function checkoutCart() {
+    if (!cart.length) return showToast('Cart is empty!');
+    showToast('Checkout complete! (Demo)');
+    // Move to purchases (demo)
+    const purchaseList = document.getElementById('purchaseList');
+    cart.forEach(item => {
+      const li = document.createElement('li');
+      li.innerText = `${item.title} - $${item.price}`;
+      purchaseList.appendChild(li);
+    });
+    cart = [];
+    updateCartUI();
+    showPage('purchases');
+  }
+  // Product filtering (improved)
+  function filterProducts() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const cat = document.getElementById('categorySelect').value;
+    let anyVisible = false;
+    document.querySelectorAll('#productList .product-card').forEach(card => {
+      const title = card.querySelector('h3').innerText.toLowerCase();
+      const desc = card.querySelector('.desc')?.innerText.toLowerCase() || '';
+      const category = card.getAttribute('data-category');
+      const match = (!search || title.includes(search) || desc.includes(search)) && (!cat || category === cat);
+      card.style.display = match ? '' : 'none';
+      if (match) anyVisible = true;
+    });
+    document.getElementById('noProductsMsg').style.display = anyVisible ? 'none' : '';
+  }
+  // Initial UI
+  updateCartUI();
+
+  // Switch user mode button logic
+  function switchUserMode() {
+    if (currentMode === 'buyer') {
+      enterSeller();
+    } else {
+      enterBuyer();
+    }
+  }
+
+  // Store products globally so both seller and buyer views can access
+  let products = [];
+  let editingIndex = null;
+
+  function addProductToListings(form) {
+    const title = form.title.value;
+    const category = form.category.value;
+    const desc = form.desc.value;
+    const usedFor = form.usedFor.value;
+    const reason = form.reason.value;
+    const condition = form.condition.value;
+    const brand = form.brand.value;
+    const price = form.price.value;
+
+    if (editingIndex !== null) {
+      // Update existing product
+      products[editingIndex] = {
+        title, category, desc, usedFor, reason, condition, brand, price,
+        img: 'https://via.placeholder.com/200'
+      };
+      editingIndex = null;
+      showToast(`Product "${title}" updated!`);
+    } else {
+      // Add new product
+      products.push({
+        title, category, desc, usedFor, reason, condition, brand, price,
+        img: 'https://via.placeholder.com/200'
+      });
+      showToast(`Product "${title}" added to your listings!`);
+    }
+
+    updateSellerListings();
+    updateProductList();
+  }
+
+  function updateSellerListings() {
+    const listingsDiv = document.getElementById('sellerListings');
+    listingsDiv.innerHTML = '';
+    products.forEach((product, idx) => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <img src="${product.img}" alt="${product.title}">
+        <h3>${product.title} (${product.category})</h3>
+        <p class="desc">${product.desc}</p>
+        <p><strong>Used For:</strong> ${product.usedFor}</p>
+        <p><strong>Reason for Reselling:</strong> ${product.reason}</p>
+        <p><strong>Condition:</strong> ${product.condition}</p>
+        <p><strong>Brand:</strong> ${product.brand}</p>
+        <div class="price-row"><span class="price">₹${product.price}</span></div>
+        <div class="action-row">
+          <button class="btn" onclick="editListing(${idx})">Edit</button>
+          <button class="btn" onclick="removeListing(${idx})">Delete</button>
+        </div>
+      `;
+      listingsDiv.appendChild(card);
+    });
+  }
+
+  function editListing(idx) {
+    const product = products[idx];
+    const form = document.querySelector('.add-product-form');
+    form.title.value = product.title;
+    form.category.value = product.category;
+    form.desc.value = product.desc;
+    form.usedFor.value = product.usedFor;
+    form.reason.value = product.reason;
+    form.condition.value = product.condition;
+    form.brand.value = product.brand;
+    form.price.value = product.price;
+    editingIndex = idx;
+    showPage('addProduct');
+    showToast('Edit the details and submit to update.');
+  }
+
+  function removeListing(idx) {
+    products.splice(idx, 1);
+    updateSellerListings();
+    updateProductList();
+    showToast('Product removed');
+  }
+
+  function updateProductList() {
+    const productListDiv = document.getElementById('productList');
+    productListDiv.innerHTML = '';
+    products.forEach(product => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.setAttribute('data-category', product.category);
+      card.onclick = function() {
+        openProductModal(
+          product.title,
+          product.price,
+          product.category,
+          `${product.desc}\nUsed For: ${product.usedFor}\nReason for Reselling: ${product.reason}\nCondition: ${product.condition}\nBrand: ${product.brand}`,
+          product.img
+        );
+      };
+      card.innerHTML = `
+        <img src="${product.img}" alt="${product.title}">
+        <h3>${product.title}</h3>
+        <p class="desc">${product.desc}<br>
+          <strong>Used For:</strong> ${product.usedFor}<br>
+          <strong>Reason for Reselling:</strong> ${product.reason}<br>
+          <strong>Condition:</strong> ${product.condition}<br>
+          <strong>Brand:</strong> ${product.brand}
+        </p>
+        <div class="price-row"><span class="price">₹${product.price}</span></div>
+        <button class="btn add-cart-btn" onclick="event.stopPropagation(); addToCart('${product.title}', ${product.price})">Add to Cart</button>
+      `;
+      productListDiv.appendChild(card);
+    });
+    filterProducts();
+  }
+
+  // Call updateProductList on page load to show any initial products
+  updateProductList();
+
+  // Filtering logic (unchanged)
+  function filterProducts() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const cat = document.getElementById('categorySelect').value;
+    let anyVisible = false;
+    document.querySelectorAll('#productList .product-card').forEach(card => {
+      const title = card.querySelector('h3').innerText.toLowerCase();
+      const desc = card.querySelector('.desc')?.innerText.toLowerCase() || '';
+      const category = card.getAttribute('data-category');
+      const match = (!search || title.includes(search) || desc.includes(search)) && (!cat || category === cat);
+      card.style.display = match ? '' : 'none';
+      if (match) anyVisible = true;
+    });
+    document.getElementById('noProductsMsg').style.display = anyVisible ? 'none' : '';
+  }
+
+  function resetPassword() {
+    const username = document.getElementById('fpUsername').value;
+    const newPassword = document.getElementById('fpNewPassword').value;
+    // Demo only: In real app, update password in backend
+    showToast(`Password updated for "${username}". You can now login with your new password.`);
+    showPage('login');
+  }
+
+  function showPaymentSection() {
+    if (!cart.length) {
+      showToast('Cart is empty!');
+      return;
+    }
+    // Show payment section
+    document.getElementById('paymentSection').style.display = '';
+    // Show final bill
+    let total = cart.reduce((sum, item) => sum + Number(item.price), 0);
+    document.getElementById('finalBill').innerHTML = `Final Bill: ₹${total}`;
+    // Scroll to payment section
+    document.getElementById('paymentSection').scrollIntoView({behavior: 'smooth'});
+  }
+
+  function confirmPayment() {
+    let method = document.querySelector('input[name="payment"]:checked').value;
+    let address = document.getElementById('deliveryAddress').value.trim();
+    if (!cart.length) { showToast("Your cart is empty!"); return; }
+    if (!address) { showToast("Please enter your delivery address."); return; }
+    let total = cart.reduce((sum, item) => sum + Number(item.price), 0);
+    alert(`Payment successful using ${method.toUpperCase()}!\nDelivery Address: ${address}\nFinal Bill: ₹${total}\nThank you for your purchase.`);
+    // Move to purchases (demo)
+    const purchaseList = document.getElementById('purchaseList');
+    cart.forEach(item => {
+      const li = document.createElement('li');
+      li.innerText = `${item.title} - ₹${item.price}`;
+      purchaseList.appendChild(li);
+      // Add to profile history
+      purchaseHistory.push(`Bought "${item.title}" - ₹${item.price}`);
+    });
+    updateProfileHistory();
+    cart = [];
+    updateCartUI();
+    document.getElementById('paymentSection').style.display = 'none';
+    showPage('purchases');
+  }
+
+  function updateProfileHistory() {
+    const historyUl = document.getElementById('profileHistory');
+    historyUl.innerHTML = '';
+    purchaseHistory.forEach(entry => {
+      const li = document.createElement('li');
+      li.innerText = entry;
+      historyUl.appendChild(li);
+    });
+  }
+
+  function updateProfile() {
+    const newUsername = document.getElementById('updateUsername').value.trim();
+    if (newUsername) {
+      document.getElementById('profileName').innerText = newUsername;
+      document.getElementById('welcomeMsg').innerText = `Welcome, ${newUsername}!`;
+      showToast('Username updated!');
+    } else {
+      showToast('Please enter a username to update.');
+    }
+    // You can add similar logic for email and password if needed
+  }
+</script>
+
+</body>
+</html>
