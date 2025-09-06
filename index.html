@@ -614,10 +614,7 @@
 <div id="welcomeMsg"></div>
 
 <header>
-  <div style="display:flex;align-items:center;justify-content:center;gap:18px;">
-    <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/svg/1f331.svg" alt="EcoFinds Logo" style="height:48px;width:48px;vertical-align:middle;">
-    <h1 style="margin:0;">EcoFinds</h1>
-  </div>
+  <h1>EcoFinds</h1>
   <nav id="main-nav" style="display:none;">
     <span id="buyer-nav" style="display:none;">
       <a onclick="showPage('home', this)">Home</a>
@@ -687,50 +684,23 @@
     </select>
   </div>
   <div class="flex" id="productList">
-    <!-- Electronics -->
-    <div class="product-card" data-category="Electronics" onclick="openProductModal('HP Laptop', 45000, 'Electronics', 'HP Laptop in good condition. Used for 2 years. Reason for selling: Upgrading.', 'hp_laptop.jpg')">
-      <img src="hp_laptop.jpg" alt="HP Laptop">
-      <h3>HP Laptop</h3>
-      <p class="desc">HP Laptop in good condition.<br><strong>Used for:</strong> 2 years<br><strong>Reason for selling:</strong> Upgrading.</p>
-      <div class="price-row"><span class="price">₹45,000</span></div>
-      <button class="btn add-cart-btn" onclick="event.stopPropagation(); addToCart('HP Laptop', 45000)">Add to Cart</button>
+    <div class="product-card" onclick="openProductModal('Eco Laptop', 300, 'Electronics', 'A pre-loved laptop in excellent condition.', 'https://via.placeholder.com/300')">
+      <img src="https://via.placeholder.com/200" alt="Product">
+      <h3>Eco Laptop</h3>
+      <p class="desc">A pre-loved laptop in excellent condition.</p>
+      <div class="price-row">
+        <span class="price">$300</span>
+      </div>
+      <button class="btn add-cart-btn" onclick="event.stopPropagation(); addToCart('Eco Laptop', 300)">Add to Cart</button>
     </div>
-    <div class="product-card" data-category="Electronics" onclick="openProductModal('Sony TV', 32000, 'Electronics', 'Sony TV, 40 inch. Used for 4 years. Reason for selling: Upgrading to smart TV.', 'sony_tv.jpg')">
-      <img src="sony_tv.jpg" alt="Sony TV">
-      <h3>Sony TV</h3>
-      <p class="desc">Sony TV, 40 inch.<br><strong>Used for:</strong> 4 years<br><strong>Reason for selling:</strong> Upgrading to smart TV.</p>
-      <div class="price-row"><span class="price">₹32,000</span></div>
-      <button class="btn add-cart-btn" onclick="event.stopPropagation(); addToCart('Sony TV', 32000)">Add to Cart</button>
-    </div>
-    <!-- Clothing -->
-    <div class="product-card" data-category="Clothing" onclick="openProductModal('Denim Jacket', 1200, 'Clothing', 'Trendy denim jacket. Used for 1 year. Reason for selling: Outgrown.', 'denim_jacket.jpg')">
-      <img src="denim_jacket.jpg" alt="Denim Jacket">
-      <h3>Denim Jacket</h3>
-      <p class="desc">Trendy denim jacket.<br><strong>Used for:</strong> 1 year<br><strong>Reason for selling:</strong> Outgrown.</p>
-      <div class="price-row"><span class="price">₹1,200</span></div>
-      <button class="btn add-cart-btn" onclick="event.stopPropagation(); addToCart('Denim Jacket', 1200)">Add to Cart</button>
-    </div>
-    <div class="product-card" data-category="Clothing" onclick="openProductModal('Crop Tops', 500, 'Clothing', 'Set of crop tops. Used for 6 months. Reason for selling: No longer needed.', 'crop_tops.jpg')">
-      <img src="crop_tops.jpg" alt="Crop Tops">
-      <h3>Crop Tops</h3>
-      <p class="desc">Set of crop tops.<br><strong>Used for:</strong> 6 months<br><strong>Reason for selling:</strong> No longer needed.</p>
-      <div class="price-row"><span class="price">₹500</span></div>
-      <button class="btn add-cart-btn" onclick="event.stopPropagation(); addToCart('Crop Tops', 500)">Add to Cart</button>
-    </div>
-    <!-- Furniture -->
-    <div class="product-card" data-category="Furniture" onclick="openProductModal('Sofa', 18000, 'Furniture', 'Comfortable sofa. Used for 3 years. Reason for selling: Redecorating.', 'sofa.jpg')">
-      <img src="sofa.jpg" alt="Sofa">
-      <h3>Sofa</h3>
-      <p class="desc">Comfortable sofa.<br><strong>Used for:</strong> 3 years<br><strong>Reason for selling:</strong> Redecorating.</p>
-      <div class="price-row"><span class="price">₹18,000</span></div>
-      <button class="btn add-cart-btn" onclick="event.stopPropagation(); addToCart('Sofa', 18000)">Add to Cart</button>
-    </div>
-    <div class="product-card" data-category="Furniture" onclick="openProductModal('Lamp', 700, 'Furniture', 'Decorative lamp. Used for 2 years. Reason for selling: Redecorating.', 'lamp.jpg')">
-      <img src="lamp.jpg" alt="Lamp">
-      <h3>Lamp</h3>
-      <p class="desc">Decorative lamp.<br><strong>Used for:</strong> 2 years<br><strong>Reason for selling:</strong> Redecorating.</p>
-      <div class="price-row"><span class="price">₹700</span></div>
-      <button class="btn add-cart-btn" onclick="event.stopPropagation(); addToCart('Lamp', 700)">Add to Cart</button>
+    <div class="product-card" onclick="openProductModal('Reused Jacket', 40, 'Clothing', 'A stylish reused jacket.', 'https://via.placeholder.com/200')">
+      <img src="https://via.placeholder.com/200" alt="Product">
+      <h3>Reused Jacket</h3>
+      <p class="desc">A stylish reused jacket.</p>
+      <div class="price-row">
+        <span class="price">$40</span>
+      </div>
+      <button class="btn add-cart-btn" onclick="event.stopPropagation(); addToCart('Reused Jacket', 40)">Add to Cart</button>
     </div>
   </div>
   <div id="noProductsMsg" style="display:none;text-align:center;color:#888;font-size:1.1em;margin-top:24px;">
@@ -965,7 +935,7 @@
     updateCartUI();
     showPage('purchases');
   }
-  // Product filtering (improved)
+  // Product filtering (demo)
   function filterProducts() {
     const search = document.getElementById('searchInput').value.toLowerCase();
     const cat = document.getElementById('categorySelect').value;
@@ -973,7 +943,7 @@
     document.querySelectorAll('#productList .product-card').forEach(card => {
       const title = card.querySelector('h3').innerText.toLowerCase();
       const desc = card.querySelector('.desc')?.innerText.toLowerCase() || '';
-      const category = card.getAttribute('data-category');
+      const category = card.querySelector('h3').innerText.includes('Laptop') ? 'Electronics' : 'Clothing';
       const match = (!search || title.includes(search) || desc.includes(search)) && (!cat || category === cat);
       card.style.display = match ? '' : 'none';
       if (match) anyVisible = true;
